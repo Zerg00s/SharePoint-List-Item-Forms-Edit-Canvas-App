@@ -45,7 +45,9 @@ This tool takes the form's Studio URL (from the browser address bar while the fo
 
 ### Usage
 
-1. Open the customized form in Power Apps Studio (from SharePoint: List > Integrate > Power Apps > Customize forms).
+1. From your SharePoint list toolbar, click **Integrate > Power Apps > Customize forms** to open the form in Power Apps Studio.
+
+   ![SharePoint list toolbar: Integrate > Power Apps > Customize forms](images/09-sharepoint-integrate-customize-forms.png)
 2. Copy the full URL from your browser's address bar.
 3. Double-click `Get-VersionsUrl.bat`.
 4. Paste the URL at the prompt and press Enter.
