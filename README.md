@@ -14,6 +14,7 @@ For the full story (including what doesn't work and why), see the accompanying b
   dotnet tool install --global Microsoft.PowerApps.CLI.Tool
   ```
 * A SharePoint Online list whose form you've already customized at least once (List > Integrate > Power Apps > Customize forms, then publish).
+* **Environment Admin** (Power Platform Admin) rights on the environment that hosts the form. Step 3 of the upload recipe below deletes the existing customized-form app through the Power Platform Admin Center, which is gated on admin rights. Regular makers cannot do it. Ask your tenant admin to add you as an env admin, or ask them to run the upload step for you.
 
 ## Repo layout
 
@@ -49,7 +50,9 @@ This tool takes the form's Studio URL (from the browser address bar while the fo
 3. Double-click `Get-VersionsUrl.bat`.
 4. Paste the URL at the prompt and press Enter.
 5. The Versions URL is printed to the console and copied to your clipboard. Answer `y` to open it in your default browser.
-6. On the Versions page, pick the live version and download the `.zip` package.
+6. On the Versions page, pick the live version and click **Export package** to download the `.zip`.
+
+![Versions page with Export package highlighted](images/07-export-package-from-versions.png)
 
 Supports both the `/e/<env>/` and `/environments/<env>/` URL shapes, and both the bare-GUID and fully-qualified (`/providers/Microsoft.PowerApps/apps/<GUID>`) forms of the `app-id` query parameter.
 
@@ -70,7 +73,9 @@ The scripts also accept bare `.msapp` input if you'd rather work with the `.msap
 
 `pac canvas` has no upload command, and the Import Package **Update** flow hides customized forms. The only path that works:
 
-1. Go to **Power Platform Admin Center > Environments > [your env] > Resources > Canvas apps**, find the customized form by name, and delete it. (The binding from the SharePoint list to the form is resolved by **app name**, not ID, so deleting is safe as long as you re-import with the same name next.)
+1. Go to **Power Platform Admin Center > Environments > [your env] > Resources > Canvas apps**, find the customized form by name, and delete it. (The binding from the SharePoint list to the form is resolved by **app name**, not ID, so deleting is safe as long as you re-import with the same name next.) **This step requires Environment Admin rights** (see Prerequisites).
+
+   ![Power Platform Admin Center Canvas apps list with the form selected and Delete highlighted](images/08-admin-center-delete.png)
 2. Go to **make.powerapps.com > Apps > Import canvas app** and upload the edited `.zip`.
 3. In the conflict-resolution panel, pick **"Create as new"** (not "Update", which won't list the form anyway) and **keep the exact same app name** the original had.
 4. Click Import. Within a few seconds the list's New/Edit/Display panes render your edited form.
